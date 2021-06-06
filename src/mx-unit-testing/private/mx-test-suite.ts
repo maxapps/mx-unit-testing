@@ -7,6 +7,7 @@ export default class MxTestSuite {
   constructor(title: string, func: () => void) {
     this.#title = title
     this.#tests = []
+    this.#todos = []
     this.#func =  func
   }
 
@@ -27,9 +28,14 @@ export default class MxTestSuite {
   }
 
 
+  addTodo(title: string) {
+    this.#todos.push(title)
+  }
+
+
   close() {
     this.#curTest?.close()
-    new MxTestReport().report(this.#title, this.#tests)
+    new MxTestReport().report(this.#title, this.#tests, this.#todos)
   }
 
 
@@ -58,6 +64,7 @@ export default class MxTestSuite {
   #curTest?: MxTest
   #func: () => void
   #tests: MxTest[]
+  #todos: string[]
   #title: string
 
 }

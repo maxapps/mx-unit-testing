@@ -2,6 +2,8 @@ import { _clear, _delayedClear, _skip} from './private/describe-members'
 import MxExpect from './private/mx-expect'
 import MxTestSuite from "./private/mx-test-suite"
 
+const VERSION = '1.0.0'
+
 
 /**
  * Creates a block that groups together several related tests. For example, if you have a **myBeverage** object that is 
@@ -92,6 +94,20 @@ test.each = function(table: any[][]): (title: string, func: (...args:any[]) => v
 
 test.skip = function(title: string, func: (...args:any[]) => void) {
   // do nothing, thus skip
+}
+
+test.todo = function(title: string) {
+  _suite.addTodo(title)
+}
+
+
+/**
+ * Simply returns the version of MxUnitTesting.
+ *
+ * @returns A string with the version number for this version of the library.
+ */
+export function version() {
+  return VERSION
 }
 
 

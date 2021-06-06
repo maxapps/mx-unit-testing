@@ -129,6 +129,10 @@ export function runTests() {
       expect(a + b).toBe(expected)
     })
 
+    test.todo('toMatchArray()')
+    test.todo('toMatchDate()')
+    test.todo('toMatchObject()')
+
   })
 
 }

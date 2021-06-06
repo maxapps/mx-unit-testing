@@ -12,7 +12,8 @@ export default class MxTestReport {
 
   // PUBLIC ============================================================================================================
 
-  report(title: string, tests: MxTest[]) {
+  // report(title: string, tests: MxTest[]) {
+  report(title: string, tests: MxTest[], todos: string[]) {
     const s = this.#styles
     let success = 0, total = 0
 
@@ -22,8 +23,6 @@ export default class MxTestReport {
     })
 
     this._out(`%c${title}`, s.Suite)
-    this._out(`%cTests: %c${success} passed, %c${total} total`,
-        s.SuiteResults, success === total ? '~' : `~${s.colorFailure}`, '~')
 
     tests.forEach(test => {
       this._grp(`%c${test.title}`, test.successCount === test.totalCount ? s.Test : `${s.Test};${s.colorFailure}`)
@@ -36,6 +35,13 @@ export default class MxTestReport {
       console.groupEnd()
     })
 
+    this._out(`%cTests: %c${success} passed, %c${total} total`,
+        s.SuiteResults, success === total ? '~' : `~${s.colorFailure}`, '~')
+
+        if (todos.length > 0) {
+      this._grp('%cToDo:', `${this.#styles.colorTodo};${this.#styles.Todo}`)
+      todos.forEach(todo => this._out(`%c${todo}`, this.#styles.colorTodo))
+    }
   }
 
 
@@ -44,11 +50,13 @@ export default class MxTestReport {
   #styles = {
     Failure: 'color:red',
     Suite: 'font-size:20px;margin-top:16px',
-    SuiteResults: 'font-size:16px',
+    SuiteResults: 'font-size:16px;margin-top:16px',
     Test: 'color:gray;font-size:16px',
     TestResults: 'font-size:14px',
+    Todo: 'font-size:16px',
     colorFailure: 'color:red',
-    colorSuccess: 'color:green'
+    colorSuccess: 'color:green',
+    colorTodo: 'color:orange'
   }
 
 

@@ -77,7 +77,7 @@ export default class MxTest {
   static errorMessasges: {[key: string]: (args: any[]) => string} = {
     toBe: (args: any[]) => `${args[0]} not the same as ${args[1]}`,
     toBeCloseTo: (args: any[]) => `${args[0]} is not close to ${args[1]}`,
-    toBeDefined: (args: any[]) => `Variable has not been defined`,
+    toBeDefined: () => `Variable has not been defined`,
     toBeFalsy: (args: any[]) => `${args[0]} is not falsy`,
     toBeGreaterThan: (args: any[]) => `${args[0]} is not greater than ${args[1]}`,
     toBeGreaterThanOrEqual: (args: any[]) => `${args[0]} is not greater than or equal to ${args[1]}`,
@@ -96,15 +96,23 @@ export default class MxTest {
       if (args.length === 2) return `Array does not contain item equal to ${args[1]}`
       else return 'Matched value is not an array'
     },
-    toEqual: (args: any[]) => `Objects are not equal`,
+    toEqual: () => `Objects are not equal`,
     toHaveLength: (args: any[]) => `${args[0]} does not have a length of ${args[1]}`,
     tohaveProperty: (args: any[]) => {
       if (args.length === 2) return `${args[0]} does not have property ${args[1]}`
       else return `${args[0]}[${args[1]}] does not equal ${args[2]}`
     },
     toMatch: (args: any[]) => `${args[0]} does not match ${args[1]}`,
-    toMatchObject: (args: any[]) => `Objects do not match`,
-    toThrow: (args: any[]) => `No error was thrown`
+    toMatchArray: (args: any[]) => {
+      if (args.length === 2) return `${args[0]} does not match ${args[1]}`
+      else return 'Matched value is not an array'
+    },
+    toMatchDate: (args: any[]) => {
+      if (args.length === 2) return `${args[0]} does not match ${args[1]}`
+      else return 'Received value is not an array'
+    },
+    toMatchObject: () => `Objects do not match`,
+    toThrow: () => `No error was thrown`
   }
 
 }
@@ -112,7 +120,8 @@ export default class MxTest {
 
 export type MxTestMatcher = 'toBe'|'toBeCloseTo'|'toBeDefined'|'toBeFalsy'|'toBeGreaterThan'|'toBeGreaterThanOrEqual'
   |'toBeInstanceOf'|'toBeLessThan'|'toBeLessThanOrEqual'|'toBeNaN'|'toBeNull'|'toBeTruthy'|'toBeUndefined'
-  |'toContain'|'toContainEqual'|'toEqual'|'toHaveLength'|'tohaveProperty'|'toMatch'|'toMatchObject'|'toThrow'
+  |'toContain'|'toContainEqual'|'toEqual'|'toHaveLength'|'tohaveProperty'
+  |'toMatch'|'toMatchArray'|'toMatchDate'|'toMatchObject'|'toThrow'
 
 
 export interface MxTestResult {
